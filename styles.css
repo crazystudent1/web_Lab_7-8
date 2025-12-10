@@ -1,0 +1,168 @@
+﻿/* =========================================
+   ЛОГІКА ФІЛЬТРАЦІЇ (CSS MAGIC)
+   ========================================= */
+
+/* 1. Ховаємо системні радіо-кнопки */
+input[name="filter"] {
+    display: none;
+}
+
+/* 2. Основне правило фільтрації:
+   Коли обрано певний id, знаходимо всередині .gallery всі картки,
+   які НЕ мають відповідного класу, і ховаємо їх.
+*/
+#filter-pie:checked ~ .container .gallery .card:not(.type-pie),
+#filter-roll:checked ~ .container .gallery .card:not(.type-roll),
+#filter-syr:checked ~ .container .gallery .card:not(.type-syr),
+#filter-cake:checked ~ .container .gallery .card:not(.type-cake),
+#filter-tort:checked ~ .container .gallery .card:not(.type-tort) {
+    display: none;
+}
+
+/* 3. Підсвітка активної кнопки в меню */
+#filter-all:checked ~ .container .sidebar label[for="filter-all"],
+#filter-pie:checked ~ .container .sidebar label[for="filter-pie"],
+#filter-roll:checked ~ .container .sidebar label[for="filter-roll"],
+#filter-syr:checked ~ .container .sidebar label[for="filter-syr"],
+#filter-cake:checked ~ .container .sidebar label[for="filter-cake"],
+#filter-tort:checked ~ .container .sidebar label[for="filter-tort"] {
+    background-color: #0056b3;
+    font-weight: bold;
+}
+
+/* =========================================
+   ОСНОВНІ СТИЛІ
+   ========================================= */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: normal;
+}
+
+.highlight {
+    color: red;
+}
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px;
+    gap: 20px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    flex: 3;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* Анімація появи при фільтрації */
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.image-container img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* САЙДБАР */
+.sidebar {
+    flex: 1;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.sidebar h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.sidebarBottons ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+
+.filter-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    transition: background 0.2s;
+}
+
+.filter-btn:hover {
+    background-color: #0069d9;
+}
+
+/* Футер */
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f1f1f1;
+    font-size: 1rem;
+    margin-top: 20px;
+}
+footer a { color: #007bff; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* АДАПТИВНІСТЬ */
+@media (max-width: 992px) {
+    .container { flex-direction: column; }
+    .sidebar { order: -1; margin-top: 0; }
+    .sidebarBottons ul { grid-template-columns: repeat(3, 1fr); }
+    .inputRange { margin-bottom: 10px; }
+}
+
+/* Додаткові адаптивні поліпшення */
+@media (max-width: 576px) {
+    .gallery { grid-template-columns: 1fr; }
+    .image-container img { height: 180px; }
+    .filter-btn { padding: 8px; font-size: 0.9rem; }
+    .sidebar { padding: 15px; }
+}
+
+/* Кінець файлу */
